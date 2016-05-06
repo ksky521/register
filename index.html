@@ -9,12 +9,14 @@
 <body>
   <div class="pure-g" id="main">
     <div class="pure-u-1-2">
-      <webview autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm" partition="persist:beiyi3" nodeintegration></webview>
+      <h3>登录</h3>
+      <webview id="login" autosize="on" minwidth="360" minheight="600" maxheight="600" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm" partition="persist:beiyi3" nodeintegration></webview>
     </div>
     <div class="pure-u-1-2">
-      <webview autosize="on" minwidth="360" minheight="600" maxheight="600" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm" partition="persist:beiyi3"></webview>
+      <h3>刷票</h3>
+      <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm" partition="persist:beiyi3" nodeintegration></webview>
     </div>
   </div>
-
+  <script type="text/javascript" src="src/js/main.js"></script>
 </body>
 </html>
