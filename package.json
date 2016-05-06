@@ -1,0 +1,23 @@
+{
+  "name": "register",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksky521/register.git"
+  },
+  "keywords": [
+    "Electron"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ksky521/register/issues"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.37.8"
+  }
+}
