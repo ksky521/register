@@ -65,8 +65,8 @@ function checkCanRegisterDom() {
 }
 
 function login() {
-  var PASSWORD = 'l98605l3';
-  var ACCOUNT = '13436319443';
+  var PASSWORD = '';
+  var ACCOUNT = '';
 
   $('#tab_my .hosi_login_my span:eq(1)').click();
   $('#mobileQuickLogin').val(ACCOUNT);
