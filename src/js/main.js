@@ -37,7 +37,7 @@ function checkCanRegisterDom() {
     __nightmare.send('login');
     return;
   }else if($('select[name=hzr]').length){
-    $('select[name=hzr]').val('');
+    $('select[name=hzr]').val('xxxxxx');
 
     var element = document.getElementById('btnSendCodeOrder');
     var event = document.createEvent('MouseEvent');
@@ -46,7 +46,7 @@ function checkCanRegisterDom() {
     return;
   }
 
-  var FIRST = '';
+  var FIRST = 'xxx';
   var $list = $('.wp .signal_source_l a');
   var len = $list.length;
   if (len > 0) {
@@ -65,8 +65,8 @@ function checkCanRegisterDom() {
 }
 
 function login() {
-  var PASSWORD = '';
-  var ACCOUNT = '';
+  var PASSWORD = 'xxxxxx';
+  var ACCOUNT = 'xxxxx';
 
   $('#tab_my .hosi_login_my span:eq(1)').click();
   $('#mobileQuickLogin').val(ACCOUNT);
