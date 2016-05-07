@@ -37,7 +37,7 @@ function checkCanRegisterDom() {
     __nightmare.send('login');
     return;
   }else if($('select[name=hzr]').length){
-    $('select[name=hzr]').val('226255766');
+    $('select[name=hzr]').val('');
 
     var element = document.getElementById('btnSendCodeOrder');
     var event = document.createEvent('MouseEvent');
@@ -46,7 +46,7 @@ function checkCanRegisterDom() {
     return;
   }
 
-  var FIRST = '杨孜';
+  var FIRST = '';
   var $list = $('.wp .signal_source_l a');
   var len = $list.length;
   if (len > 0) {
