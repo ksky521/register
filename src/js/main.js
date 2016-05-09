@@ -3,12 +3,16 @@ var template = require('./lib/javascript')
 var ipcRenderer = electron.ipcRenderer;
 var $login = document.getElementById('login');
 var $register = document.getElementById('register');
-var timer = setInterval(function () {
+var COUNT = 0;
+var $count = document.getElementById('count');
+
+var timer = setInterval(function() {
+  $count.innerText = ++COUNT;
   $register.reloadIgnoringCache();
 }, 3e3);
 
 
-ipcRenderer.on('hostChannel', function (event, msg) {
+ipcRenderer.on('hostChannel', function(event, msg) {
   switch (msg.type) {
     case 'clearTimer':
       clearInterval(timer);
@@ -21,26 +25,39 @@ ipcRenderer.on('hostChannel', function (event, msg) {
 });
 
 
-$register.addEventListener('did-finish-load', function () {
+$register.addEventListener('did-finish-load', function() {
   var code = getCode(checkCanRegisterDom);
   $register.executeJavaScript(code);
 });
 
-$login.addEventListener('did-finish-load', function () {
+// $login.addEventListener('did-finish-load', function() {
+//   var code = getCode(login);
+//   // $login.executeJavaScript(code);
+// });
+
+//重置和自动登录
+var $autoLoginBtn = document.getElementById('autoLogin');
+var $reset = document.getElementById('reset');
+$reset.addEventListener('click', function() {
+  $login.loadURL('http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm');
+}, true);
+$autoLoginBtn.addEventListener('click', function() {
   var code = getCode(login);
-  // $login.executeJavaScript(code);
-});
+  $login.executeJavaScript(code);
+}, true);
 
 //检验
 function checkCanRegisterDom() {
+  var element = null,
+    event = null;
   if ($('#mobileQuickLogin').length && $('#pwQuickLogin').length) {
     __nightmare.send('login');
     return;
-  }else if($('select[name=hzr]').length){
+  } else if ($('select[name=hzr]').length) {
     $('select[name=hzr]').val('xxxxxx');
 
-    var element = document.getElementById('btnSendCodeOrder');
-    var event = document.createEvent('MouseEvent');
+    element = document.getElementById('btnSendCodeOrder');
+    event = document.createEvent('MouseEvent');
     event.initEvent('click', true, true);
     element.dispatchEvent(event);
     return;
@@ -51,13 +68,13 @@ function checkCanRegisterDom() {
   var len = $list.length;
   if (len > 0) {
     var f = 0;
-    $('.wp .signal_source_l a').each(function (i, v) {
+    $('.wp .signal_source_l a').each(function(i, v) {
       if (v.innerText.indexOf(FIRST) !== -1) {
         f = i;
       }
     });
-    var element = $list.eq(f)[0];
-    var event = document.createEvent('MouseEvent');
+    element = $list.eq(f)[0];
+    event = document.createEvent('MouseEvent');
     event.initEvent('click', true, true);
     element.dispatchEvent(event);
     __nightmare.send('clearTimer');
