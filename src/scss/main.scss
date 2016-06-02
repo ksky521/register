@@ -3,6 +3,13 @@
     margin-bottom: 10px;
 }
 
+#main > .col-md-6 {
+    height: 600px;
+    webview {
+        height: 100%;
+    }
+}
+
 .ss {
     margin: 0;
     border: 1px solid #ddd;

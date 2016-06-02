@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link rel="stylesheet" type="text/css" href="src/css/main.css">
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="src/js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
 </head>
 
 <body class="container">
@@ -31,17 +31,18 @@
                     <h4>就诊人</h4>
                     <div class="checkbox" id="userName">
                     </div>
+                    <button class="btn btn-warning" id="btnUsers">获取</button>
                 </div>
                 <div class="ss">
                     <h4>就诊时间</h4>
                     <div class="form-inline " id="dateTime">
                         <div class="form-group">
                             <label>优选日期</label>
-                            <input type="date" class="form-control" />
+                            <input type="date" class="form-control" id="planA" />
                         </div>
                         <div class="form-group">
                             <label for="password">备选日期</label>
-                            <input type="date" class="form-control" />
+                            <input type="date" class="form-control" id="planB" />
                         </div>
                     </div>
                 </div>
@@ -69,12 +70,16 @@
                     <h4>按名字选择医生</h4>
                     <div class="checkbox" id="docName">
                     </div>
+                    <button class="btn btn-warning" id="btnDoctors">获取</button>
                 </div>
             </div>
+            <button class="btn btn-success" id="btnStart">开始刷</button>
+            <button class="btn btn-primary" id="btnStop">停止刷</button>
         </div>
         <div class="col-md-6">
             <h3>刷<span id="count">0</span>次</h3>
-            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm" partition="persist:beiyi3" nodeintegration preload="src/js/preload.js"></webview>
+            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm
+" partition="persist:beiyi3" nodeintegration preload="src/js/preload.js"></webview>
         </div>
     </div>
     <script type="text/javascript" src="src/js/main.js"></script>
