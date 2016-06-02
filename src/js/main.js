@@ -1,6 +1,7 @@
-var URL_LOGIN = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm';
+var URL_LOGIN = 'http://yyghwx.bjguahao.gov.cn/tologin.htm';
 var URL_REG = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039578.htm';
-var URL_USERS = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/p/info.htm';
+//http://yyghwx.bjguahao.gov.cn/common/dutysource/appoints/142,200039484.htm?departmentName=%25E4%25BA%25A7%25E7%25A7%2591%25E9%2597%25A8%25E8%25AF%258A
+var URL_USERS = 'http://yyghwx.bjguahao.gov.cn/p/info.htm';
 
 var $login = document.getElementById('login');
 var $register = document.getElementById('register');
@@ -277,8 +278,9 @@ function exec_checkCanRegisterDom() {
 function exec_login() {
     var PASSWORD = '{{!password}}';
     var ACCOUNT = '{{!account}}';
-
-    $('#tab_my .hosi_login_my span:eq(1)').click();
+    if ($('#tab_my .hosi_login_my span.Current').html() !== '快速登录') {
+        $('#tab_my .hosi_login_my span:eq(1)').click();
+    }
     $('#mobileQuickLogin').val(ACCOUNT);
     $('#pwQuickLogin').val(PASSWORD);
     var element = document.querySelector('#quick_login_button');
@@ -291,14 +293,15 @@ function exec_login() {
 //获取医生列表
 function exec_getDoctors() {
     var users = [];
-    $('.signal_source_l .signal_source_l_ul').find('li:eq(1)').find('span:first-child').each(function(i, v) {
-        var user = $(v).text();
-        if (users.indexOf(user) === -1) {
-            users.push(user);
-        }
+$('.signal_source_l .signal_source_l_ul').find('li:eq(1)').find('span:first-child').each(function(i, v) {
+    var user = $(v).text();
+    if (users.indexOf(user) === -1) {
+        users.push(user);
+    }
 
 
-    });
+});
+
     __nightmare.send('doctors', users);
 }
 
@@ -306,7 +309,7 @@ function exec_getDoctors() {
 function exec_getUsers() {
     //http://wx-beiyi3.bjguahao.gov.cn/pekingthird/p/info.htm
     var users = [];
-    $('.account_box_l h4 b').each(function(i, v) {
+    $('.account_box_l h4:first-child').each(function(i, v) {
         var user = $(v).text();
         if (users.indexOf(user) === -1) {
             users.push(user);
