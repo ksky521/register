@@ -1,0 +1,27 @@
+@import 'bootstrap';
+.sbox {
+    margin-bottom: 10px;
+}
+
+.ss {
+    margin: 0;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    padding: 10px;
+    h3,
+    h4,
+    h5 {
+        margin: 0;
+        color: #4cae4c;
+    }
+    .form-inline {
+        margin-top: 10px;
+    }
+    &:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+    &:last-child {
+        border-bottom: 1px solid #ddd;
+        border-radius: 0 0 4px 4px;
+    }
+}

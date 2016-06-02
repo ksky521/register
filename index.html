@@ -1,27 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Register</title>
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="src/css/main.css">
-</head>
-<body>
-  <div class="pure-g" id="main">
-    <div class="pure-u-1-2">
-      <h3>登录</h3>
-      <webview id="login" autosize="on" minwidth="360" minheight="520" maxheight="520" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm" partition="persist:beiyi3" nodeintegration  preload="src/js/preload.js"></webview>
-      <div class="pure-g">
-        <div class="pure-u-1-2"><button class="pure-button button-success" id="reset">重置页面</button></div>
-        <div class="pure-u-1-2"><button class="pure-button button-error" id="autoLogin">自动登录</button></div>
+<html>
 
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="src/css/main.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body class="container">
+    <div class="row" id="main">
+        <div class="col-md-6">
+            <h3>设置</h3>
+            <div class="sbox">
+                <div class="ss">
+                    <h4>账号&密码</h4>
+                    <div class="form-inline " id="loginBox">
+                        <div class="form-group">
+                            <label for="account">账号</label>
+                            <input type="text" class="form-control" id="account" placeholder="请输入挂号系统账号">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+                        </div>
+                        <button type="submit" id="autoLogin" class="btn btn-danger">自动登录</button>
+                    </div>
+                </div>
+                <div class="ss">
+                    <h4>就诊人</h4>
+                    <div class="checkbox" id="userName">
+                    </div>
+                </div>
+                <div class="ss">
+                    <h4>就诊时间</h4>
+                    <div class="form-inline " id="dateTime">
+                        <div class="form-group">
+                            <label>优选日期</label>
+                            <input type="date" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">备选日期</label>
+                            <input type="date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="ss">
+                    <h4>按级别选择大夫</h4>
+                    <div class="checkbox" id="docType">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="主任"> 主任
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="专家"> 专家
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="正教授"> 正教授
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="副教授"> 副教授
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="普通"> 普通
+                        </label>
+                    </div>
+                </div>
+                <div class="ss">
+                    <h4>按名字选择医生</h4>
+                    <div class="checkbox" id="docName">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>刷<span id="count">0</span>次</h3>
+            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm" partition="persist:beiyi3" nodeintegration preload="src/js/preload.js"></webview>
+        </div>
     </div>
-    <div class="pure-u-1-2">
-      <h3>刷<span id="count">0</span>次</h3>
-      <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm" partition="persist:beiyi3" nodeintegration preload="src/js/preload.js"></webview>
-    </div>
-  </div>
-  <script type="text/javascript" src="src/js/main.js"></script>
+    <script type="text/javascript" src="src/js/main.js"></script>
 </body>
+
 </html>
