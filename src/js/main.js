@@ -4,12 +4,13 @@ var template = require('./lib/javascript');
 var ipcRenderer = electron.ipcRenderer;
 var minstache = require('minstache');
 var Path = require('path');
+var ss = sessionStorage;
 
-var INTERVAL = 3e3;
+var INTERVAL = 3000;
 var URL_LOGIN = 'http://yyghwx.bjguahao.gov.cn/tologin.htm';
 var URL_HOME = 'http://yyghwx.bjguahao.gov.cn';
 var _URL_REG = 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/{{!hid}},{{!dptid}}.htm?dutyDate=&departmentName=';
-var URL_REG = 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/142,200039484.htm?dutyDate=&departmentName=';
+var URL_REG = ss.url_reg || 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/142,200039484.htm?dutyDate=&departmentName=';
 //http://yyghwx.bjguahao.gov.cn/common/dutysource/appoints/142,200039484.htm?departmentName=%25E4%25BA%25A7%25E7%25A7%2591%25E9%2597%25A8%25E8%25AF%258A
 var URL_USERS = 'http://yyghwx.bjguahao.gov.cn/p/info.htm';
 
@@ -54,7 +55,6 @@ Object.defineProperties(DATA, {
 });
 DATA.users = [];
 DATA.doctors = [];
-var ss = sessionStorage;
 var CONFIG = {
     docType: [],
     docName: [],
@@ -77,7 +77,7 @@ var CONFIG = {
 ['account', 'password'].forEach(function(v) {
     $('#' + v).keyup(function(v) {
         return function() {
-            CONFIG[v] = this.value;
+            ss[v] = CONFIG[v] = this.value;
         }
     }(v)).val(ss[v] || '');
 });
@@ -118,7 +118,7 @@ $('#btnDoctors').click(function() {
 //自动登录
 $('#autoLogin').click(function() {
     ['account', 'password'].forEach(function(v) {
-        CONFIG[v] = $('#' + v).val()
+        ss[v] = CONFIG[v] = $('#' + v).val()
     });
 
     if (CONFIG.account && CONFIG.password) {
@@ -161,16 +161,17 @@ $('#power').click(function() {
 $('#interval').change(function() {
     INTERVAL = this.value * 1000;
     if (doing) {
-        start(INTERVAL);
+        start();
     }
 });
 
 $('#btnStop').click(stop);
 var doing = false;
 
-function start(time) {
-    time = time || INTERVAL;
+function start() {
     stop();
+    $('#btnStart').attr('disabled', 'disabled');
+
     doing = true;
     var $count = document.getElementById('count');
     var count = 0;
@@ -178,12 +179,14 @@ function start(time) {
     timer = setInterval(function() {
         $count.innerText = ++count;
         $register.reloadIgnoringCache();
-    }, time);
+    }, INTERVAL);
 
     $register.addEventListener('did-finish-load', checkIt);
 }
 
 function stop() {
+    $('#btnStart').removeAttr('disabled');
+
     timer && clearInterval(timer);
     $register.removeEventListener('did-finish-load', checkIt);
     doing = false;
@@ -237,7 +240,7 @@ ipcRenderer.on('hostChannel', function(event, msg) {
             break;
         case 'login':
             ['account', 'password'].forEach(function(v) {
-                CONFIG[v] = $('#' + v).val()
+                ss[v] = CONFIG[v] = $('#' + v).val()
             });
             var code = getCode(exec_login, CONFIG);
             $register.executeJavaScript(code);
@@ -252,6 +255,7 @@ ipcRenderer.on('hostChannel', function(event, msg) {
             });
             var code = minstache.compile(_URL_REG);
             URL_REG = code(msg.data);
+            ss.url_reg = URL_REG;
             showBtn(); //显示按钮
             console.log(URL_REG);
             break;
