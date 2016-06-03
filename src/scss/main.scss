@@ -42,6 +42,13 @@ $mainHeight: 600px;
     height: $mainHeight;
 }
 
+footer {
+    position: fixed;
+    left: 20px;
+    bottom: 10px;
+    color: #aaa;
+}
+
 .ss {
     margin: 0;
     border: 1px solid #ddd;
