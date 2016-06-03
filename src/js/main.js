@@ -5,6 +5,7 @@ var ipcRenderer = electron.ipcRenderer;
 var minstache = require('minstache');
 var Path = require('path');
 
+var INTERVAL = 3e3;
 var URL_LOGIN = 'http://yyghwx.bjguahao.gov.cn/tologin.htm';
 var URL_HOME = 'http://yyghwx.bjguahao.gov.cn';
 var _URL_REG = 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/{{!hid}},{{!dptid}}.htm?dutyDate=&departmentName=';
@@ -53,13 +54,13 @@ Object.defineProperties(DATA, {
 });
 DATA.users = [];
 DATA.doctors = [];
-
+var ss = sessionStorage;
 var CONFIG = {
     docType: [],
     docName: [],
     userName: '',
-    account: '',
-    password: '',
+    account: ss.account || '',
+    password: ss.password || '',
     planA: '',
     planB: '',
     hid: 0,
@@ -78,7 +79,7 @@ var CONFIG = {
         return function() {
             CONFIG[v] = this.value;
         }
-    }(v));
+    }(v)).val(ss[v] || '');
 });
 ['docType', 'docName', 'userName'].forEach(function(v) {
     $('#' + v).delegate('input', 'click', function(v) {
@@ -112,8 +113,8 @@ $('#btnDoctors').click(function() {
         $register.removeEventListener('did-finish-load', cb);
     }
     $register.addEventListener('did-finish-load', cb);
-
 });
+
 //自动登录
 $('#autoLogin').click(function() {
     ['account', 'password'].forEach(function(v) {
@@ -148,30 +149,50 @@ $('#btnUsers').click(function() {
 });
 
 var timer;
-$('#btnStart').click(function() {
-    var $count = document.getElementById('count');
-    var count = 0;
-    $register.loadURL(URL_REG);
-    timer && clearInterval(timer);
-    timer = setInterval(function() {
-        $count.innerText = ++count;
-        $register.reloadIgnoringCache();
-    }, 3e3);
-
-    $register.addEventListener('did-finish-load', checkIt);
-});
+$('#btnStart').click(start);
 
 $register.addEventListener('did-stop-loading', findDpt);
 
 
-$('#btnStop').click(function() {
+$('#power').click(function() {
+    ipcRenderer.send('powerSaveBlocker', !!this.checked);
+});
+
+$('#interval').change(function() {
+    INTERVAL = this.value * 1000;
+    if (doing) {
+        start(INTERVAL);
+    }
+});
+
+$('#btnStop').click(stop);
+var doing = false;
+
+function start(time) {
+    time = time || INTERVAL;
+    stop();
+    doing = true;
+    var $count = document.getElementById('count');
+    var count = 0;
+    $register.loadURL(URL_REG);
+    timer = setInterval(function() {
+        $count.innerText = ++count;
+        $register.reloadIgnoringCache();
+    }, time);
+
+    $register.addEventListener('did-finish-load', checkIt);
+}
+
+function stop() {
     timer && clearInterval(timer);
     $register.removeEventListener('did-finish-load', checkIt);
-});
+    doing = false;
+}
 
 $('#navTools').delegate('a[data-id]', 'click', function() {
     var $t = $(this);
     var action = $t.data('id');
+    stop();
     switch (action) {
         case 'back':
             $register.goBack();
@@ -235,11 +256,26 @@ ipcRenderer.on('hostChannel', function(event, msg) {
             console.log(URL_REG);
             break;
         case 'startThisPage':
-            $('#btnStart').click();
+            start();
+            break;
+        case 'haveTel':
+            showNotify();
             break;
     }
 });
 
+var lastNotifyTime = Date.now();
+
+function showNotify() {
+    var lt = Data.now() - lastNotifyTime;
+    //1分钟发一次
+    if (lt > 60 * 1000 * 1000) {
+        new Notification('发现114号源', {
+            title: '发现114号源',
+            body: '你监控的号源有114号源；快拨打010114进行挂号'
+        });
+    }
+}
 
 
 //检验
@@ -253,15 +289,15 @@ function exec_checkCanRegisterDom() {
     if ($('#mobileQuickLogin').length && $('#pwQuickLogin').length) {
         __nightmare.send('login');
         return;
-    } else if ($('select[name=hzr]').length) {
-        var $opts = $('select[name=hzr] option');
+    } else if ($('select#tjdd_bxlx').length) {
+        var $opts = $('select#tjdd_bxlx option');
         for (var i = 0, len = $opts.length; i < len; i++) {
             var txt = $opts.eq(i).html();
             if (txt === config.userName) {
-                $('select[name=hzr]').val($opts.eq(i).val());
+                $('select#tjdd_bxlx').val($opts.eq(i).val());
             }
         }
-
+        window.alert = console.log;
         element = document.getElementById('btnSendCodeOrder');
         event = document.createEvent('MouseEvent');
         event.initEvent('click', true, true);
@@ -275,8 +311,14 @@ function exec_checkCanRegisterDom() {
         var $l;
         while (len--) {
             $l = $list.eq(len);
+            //刨除只能电话预约的
+            if ($l[0].href.indexOf('tel:010114') !== -1) {
+                __nightmare.send('haveTel');
+                continue;
+            }
             var date = $l.find('.hyxzym_b_sjp').text();
             var name = $l.find('.hyxzym_b_date').text();
+
             var step = 0;
             if (config.docName && config.docName.length) {
                 step++;
@@ -383,7 +425,6 @@ function getCode(fn, data) {
         code = minstache.compile(code);
         code = code(data);
     }
-
     data = data || {};
 
     data.src = code;
