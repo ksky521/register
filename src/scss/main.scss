@@ -1,13 +1,45 @@
 @import 'bootstrap';
+.container {
+    margin: 0;
+}
+
+.nav {
+    .btn {
+        border: 0 none;
+        padding: 0;
+        border-radius: 0;
+    }
+    span {
+        float: left;
+        width: 20%;
+        height: 56px;
+        padding: 10px;
+        font-size: 24px;
+        line-height: 1.4;
+        text-align: center;
+    }
+}
+
 .sbox {
     margin-bottom: 10px;
 }
 
-#main > .col-md-6 {
-    height: 600px;
+#main .col-md-7 {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+$mainHeight: 600px;
+#main > div {
+    height: $mainHeight;
     webview {
-        height: 100%;
+        height: $mainHeight;
     }
+}
+
+#register {
+    width: 380px;
+    height: $mainHeight;
 }
 
 .ss {

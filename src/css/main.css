@@ -5809,13 +5809,37 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+.container {
+  margin: 0; }
+
+.nav .btn {
+  border: 0 none;
+  padding: 0;
+  border-radius: 0; }
+.nav span {
+  float: left;
+  width: 20%;
+  height: 56px;
+  padding: 10px;
+  font-size: 24px;
+  line-height: 1.4;
+  text-align: center; }
+
 .sbox {
   margin-bottom: 10px; }
 
-#main > .col-md-6 {
+#main .col-md-7 {
+  margin-right: 0;
+  padding-right: 0; }
+
+#main > div {
   height: 600px; }
-  #main > .col-md-6 webview {
-    height: 100%; }
+  #main > div webview {
+    height: 600px; }
+
+#register {
+  width: 380px;
+  height: 600px; }
 
 .ss {
   margin: 0;

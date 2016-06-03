@@ -11,7 +11,7 @@ var wc = null;
 
 app.on('ready', function() {
     window = new BrowserWindow({
-        width: 1200,
+        width: 1000,
         height: 700
     });
     //打开登录页面
