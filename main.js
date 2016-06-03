@@ -25,7 +25,7 @@ renderer.on('error', function(sender) {
 });
 
 renderer.on('powerSaveBlocker', function(e, msg) {
-    console.log(msg);
+    // console.log(msg);
     if (msg) {
         PowerID = powerSaveBlocker.start('prevent-app-suspension');
     } else {
