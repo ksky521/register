@@ -1,5 +1,5 @@
 var URL_LOGIN = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm';
-var URL_REG = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039578.htm';
+var URL_REG = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039484.htm';
 var URL_USERS = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/p/info.htm';
 
 var $login = document.getElementById('login');
