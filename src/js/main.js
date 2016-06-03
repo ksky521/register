@@ -1,6 +1,7 @@
 var URL_LOGIN = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/tologin.htm';
 var URL_REG = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039484.htm';
 var URL_USERS = 'http://wx-beiyi3.bjguahao.gov.cn/pekingthird/p/info.htm';
+var ss = sessionStorage;
 
 var $login = document.getElementById('login');
 var $register = document.getElementById('register');
@@ -48,8 +49,8 @@ var CONFIG = {
     docType: [],
     docName: [],
     userName: '',
-    account: '',
-    password: '',
+    account: ss.account || '',
+    password: ss.password || '',
     planA: '',
     planB: ''
 };
@@ -64,9 +65,9 @@ var CONFIG = {
 ['account', 'password'].forEach(function(v) {
     $('#' + v).keyup(function(v) {
         return function() {
-            CONFIG[v] = this.value;
+            ss[v] = CONFIG[v] = this.value;
         }
-    }(v));
+    }(v)).val(ss[v] || '');
 });
 ['docType', 'docName', 'userName'].forEach(function(v) {
     $('#' + v).delegate('input', 'click', function(v) {
@@ -90,7 +91,9 @@ var CONFIG = {
         }
     }(v));
 });
-
+$('#power').click(function() {
+    ipcRenderer.send('powerSaveBlocker', !!this.checked);
+});
 //点击获取医生列表
 $('#btnDoctors').click(function() {
     $register.loadURL(URL_REG);
@@ -105,7 +108,7 @@ $('#btnDoctors').click(function() {
 //自动登录
 $('#autoLogin').click(function() {
     ['account', 'password'].forEach(function(v) {
-        CONFIG[v] = $('#' + v).val()
+        ss[v] = CONFIG[v] = $('#' + v).val()
     });
 
     if (CONFIG.account && CONFIG.password) {
@@ -181,7 +184,7 @@ ipcRenderer.on('hostChannel', function(event, msg) {
             break;
         case 'login':
             ['account', 'password'].forEach(function(v) {
-                CONFIG[v] = $('#' + v).val()
+                ss[v] = CONFIG[v] = $('#' + v).val()
             });
             var code = getCode(exec_login, CONFIG);
             $register.executeJavaScript(code);
