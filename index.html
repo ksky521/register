@@ -10,13 +10,21 @@
 
 <body class="container">
     <div class="row" id="main">
-        <div class="col-md-6">
-            <h3>设置</h3>
+        <div class="col-md-7">
+            <h3>设置 <small>共刷了<span id="count">?</span>次</small></h3>
             <div class="sbox">
                 <div class="ss">
                     <h4>刷新设置</h4>
                     <div class="form-inline">
                         <div class="form-group">
+                            <label for="interval">间隔</label>
+                            <select class="form-control" id="interval">
+                                <option value="3">3秒（默认）</option>
+                                <option value="5">5秒</option>
+                                <option value="10">10秒</option>
+                                <option value="15">15秒</option>
+                                <option value="20">20秒</option>
+                            </select>
                             <label class="checkbox-inline">
                                 <input type="checkbox" id="power"> 屏幕常亮
                             </label>
@@ -86,12 +94,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <h3>刷<span id="count">0</span>次</h3>
-            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://wx-beiyi3.bjguahao.gov.cn/pekingthird/dpt/appoint/200039604.htm
-" partition="persist:beiyi3" nodeintegration preload="src/js/preload.js"></webview>
+        <div class="col-md-5">
+            <div class="nav" id="navTools">
+                <a class="btn btn-default" href="javascript:void(0);" data-id="home"><span class="glyphicon glyphicon-home"></span></a>
+                <a class="btn btn-default" href="javascript:void(0);" data-id="back"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                <a class="btn btn-default" href="javascript:void(0);" data-id="reload"><span class="glyphicon glyphicon-repeat"></span></a>
+            </div>
+            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://yyghwx.bjguahao.gov.cn/" partition="persist:webview" nodeintegration preload="src/js/preload.js" useragent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13F69 MicroMessenger/6.3.16 NetType/WIFI Language/zh_CN"></webview>
         </div>
     </div>
+    <footer>
+        源码地址：https://github.com/ksky521/register
+    </footer>
     <script type="text/javascript" src="src/js/main.js"></script>
 </body>
 

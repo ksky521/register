@@ -13,7 +13,7 @@ var wc = null;
 
 app.on('ready', function() {
     window = new BrowserWindow({
-        width: 1200,
+        width: 1000,
         height: 700
     });
     //打开登录页面
@@ -29,6 +29,15 @@ renderer.on('powerSaveBlocker', function(e, msg) {
 });
 renderer.on('error', function(sender) {
     console.log(sliced(arguments, 1));
+});
+
+renderer.on('powerSaveBlocker', function(e, msg) {
+    // console.log(msg);
+    if (msg) {
+        PowerID = powerSaveBlocker.start('prevent-app-suspension');
+    } else {
+        PowerID && powerSaveBlocker.stop(PowerID);
+    }
 });
 
 renderer.on('hostChannel', function(e, msg) {
