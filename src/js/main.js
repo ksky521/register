@@ -8,11 +8,13 @@ var ss = sessionStorage;
 
 var INTERVAL = 3000;
 var URL_LOGIN = 'http://yyghwx.bjguahao.gov.cn/tologin.htm';
-var URL_HOME = 'http://yyghwx.bjguahao.gov.cn';
+var URL_H
+OME = 'http://yyghwx.bjguahao.gov.cn';
 var _URL_REG = 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/{{!hid}},{{!dptid}}.htm?dutyDate=&departmentName=';
 var URL_REG = ss.url_reg || 'http://yyghwx.bjguahao.gov.cn/common/dutysource/appoint/142,200039484.htm?dutyDate=&departmentName=';
 //http://yyghwx.bjguahao.gov.cn/common/dutysource/appoints/142,200039484.htm?departmentName=%25E4%25BA%25A7%25E7%25A7%2591%25E9%2597%25A8%25E8%25AF%258A
 var URL_USERS = 'http://yyghwx.bjguahao.gov.cn/p/info.htm';
+
 
 var $login = document.getElementById('login');
 var $register = document.getElementById('register');
@@ -103,7 +105,9 @@ var CONFIG = {
         }
     }(v));
 });
-
+$('#power').click(function() {
+    ipcRenderer.send('powerSaveBlocker', !!this.checked);
+});
 //点击获取医生列表
 $('#btnDoctors').click(function() {
     $register.loadURL(URL_REG);
