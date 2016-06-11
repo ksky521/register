@@ -1,73 +1,73 @@
 @import 'bootstrap';
 .container {
-    margin: 0;
+  margin: 0;
 }
 
 .nav {
-    .btn {
-        border: 0 none;
-        padding: 0;
-        border-radius: 0;
-    }
-    span {
-        float: left;
-        width: 20%;
-        height: 56px;
-        padding: 10px;
-        font-size: 24px;
-        line-height: 1.4;
-        text-align: center;
-    }
+  .btn {
+    border: 0 none;
+    padding: 0;
+    border-radius: 0;
+  }
+  span {
+    float: left;
+    width: 20%;
+    height: 56px;
+    padding: 10px;
+    font-size: 24px;
+    line-height: 1.4;
+    text-align: center;
+  }
 }
 
 .sbox {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 #main .col-md-7 {
-    margin-right: 0;
-    padding-right: 0;
+  margin-right: 0;
+  padding-right: 0;
 }
 
 $mainHeight: 600px;
 #main > div {
+  height: $mainHeight;
+  webview {
     height: $mainHeight;
-    webview {
-        height: $mainHeight;
-    }
+  }
 }
 
 #register {
-    width: 380px;
-    height: $mainHeight;
+  width: 400px;
+  height: $mainHeight;
 }
 
 footer {
-    position: fixed;
-    left: 20px;
-    bottom: 10px;
-    color: #aaa;
+  position: fixed;
+  left: 20px;
+  bottom: 10px;
+  color: #000;
 }
 
 .ss {
+  margin: 0;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  padding: 10px;
+  h3,
+  h4,
+  h5 {
     margin: 0;
-    border: 1px solid #ddd;
-    border-bottom: 0;
-    padding: 10px;
-    h3,
-    h4,
-    h5 {
-        margin: 0;
-        color: #4cae4c;
-    }
-    .form-inline {
-        margin-top: 10px;
-    }
-    &:first-child {
-        border-radius: 4px 4px 0 0;
-    }
-    &:last-child {
-        border-bottom: 1px solid #ddd;
-        border-radius: 0 0 4px 4px;
-    }
+    color: #4cae4c;
+  }
+  .form-inline {
+    margin-top: 10px;
+  }
+  &:first-child {
+    border-radius: 4px 4px 0 0;
+  }
+  &:last-child {
+    border-bottom: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+  }
 }

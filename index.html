@@ -2,111 +2,137 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="src/css/main.css">
-    <script src="src/js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" type="text/css" href="src/css/main.css">
+  <script src="src/js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="src/js/bootstrap.min.js"></script>
 </head>
 
 <body class="container">
-    <div class="row" id="main">
-        <div class="col-md-7">
-            <h3>设置 <small>共刷了<span id="count">?</span>次</small></h3>
-            <div class="sbox">
-                <div class="ss">
-                    <h4>刷新设置</h4>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label for="interval">间隔</label>
-                            <select class="form-control" id="interval">
-                                <option value="3">3秒（默认）</option>
-                                <option value="5">5秒</option>
-                                <option value="10">10秒</option>
-                                <option value="15">15秒</option>
-                                <option value="20">20秒</option>
-                            </select>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="power"> 屏幕常亮
-                            </label>
-                            <button class="btn btn-success" id="btnStart">开始刷</button>
-                            <button class="btn btn-primary" id="btnStop">停止刷</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="ss">
-                    <h4>账号&密码</h4>
-                    <div class="form-inline " id="loginBox">
-                        <div class="form-group">
-                            <label for="account">账号</label>
-                            <input type="text" class="form-control" id="account" placeholder="请输入挂号系统账号">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">密码</label>
-                            <input type="password" class="form-control" id="password" placeholder="请输入密码">
-                        </div>
-                        <button type="submit" id="autoLogin" class="btn btn-danger">自动登录</button>
-                    </div>
-                </div>
-                <div class="ss">
-                    <h4>就诊人</h4>
-                    <div class="checkbox" id="userName">
-                    </div>
-                    <button class="btn btn-warning" id="btnUsers">获取</button>
-                </div>
-                <div class="ss">
-                    <h4>就诊时间</h4>
-                    <div class="form-inline " id="dateTime">
-                        <div class="form-group">
-                            <label>优选日期</label>
-                            <input type="date" class="form-control" id="planA" />
-                        </div>
-                        <div class="form-group">
-                            <label for="password">备选日期</label>
-                            <input type="date" class="form-control" id="planB" />
-                        </div>
-                    </div>
-                </div>
-                <div class="ss">
-                    <h4>按级别选择大夫</h4>
-                    <div class="checkbox" id="docType">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="主任"> 主任
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="专家"> 专家
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="正教授"> 正教授
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="副教授"> 副教授
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="普通"> 普通
-                        </label>
-                    </div>
-                </div>
-                <div class="ss">
-                    <h4>按名字选择医生</h4>
-                    <div class="checkbox" id="docName">
-                    </div>
-                    <button class="btn btn-warning" id="btnDoctors">获取</button>
-                </div>
+  <div class="row" id="main">
+    <div class="col-md-7">
+      <h3><small>共刷了<span id="count">?</span>次</small></h3>
+      <div class="sbox">
+        <div class="ss">
+          <h5>刷新设置</h5>
+          <div class="form-inline">
+            <div class="form-group">
+              <label for="interval">间隔</label>
+              <select class="form-control" id="interval">
+                <option value="3">3秒（默认）</option>
+                <option value="5">5秒</option>
+                <option value="10">10秒</option>
+                <option value="15">15秒</option>
+                <option value="20">20秒</option>
+              </select>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="power"> 屏幕常亮
+              </label>
+              <button class="btn btn-success btn-sm" id="btnStart">开始刷</button>
+              <button class="btn btn-primary btn-sm" id="btnStop">停止刷</button>
             </div>
+          </div>
         </div>
-        <div class="col-md-5">
-            <div class="nav" id="navTools">
-                <a class="btn btn-default" href="javascript:void(0);" data-id="home"><span class="glyphicon glyphicon-home"></span></a>
-                <a class="btn btn-default" href="javascript:void(0);" data-id="back"><span class="glyphicon glyphicon-arrow-left"></span></a>
-                <a class="btn btn-default" href="javascript:void(0);" data-id="reload"><span class="glyphicon glyphicon-repeat"></span></a>
+        <div class="ss">
+          <h5>账号&amp;密码</h5>
+          <div class="form-inline " id="loginBox">
+            <div class="form-group">
+              <label for="account">账号</label>
+              <input type="text" class="form-control" id="account" placeholder="请输入挂号系统账号">
             </div>
-            <webview id="register" autosize="on" minwidth="360" minheight="600" maxheight="610" src="http://yyghwx.bjguahao.gov.cn/" partition="persist:webview" nodeintegration preload="src/js/preload.js" useragent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13F69 MicroMessenger/6.3.16 NetType/WIFI Language/zh_CN"></webview>
+            <div class="form-group">
+              <label for="password">密码</label>
+              <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+            <button type="submit" id="autoLogin" class="btn btn-danger btn-sm">自动登录</button>
+          </div>
         </div>
+        <div class="ss">
+          <h5>就诊人</h5>
+          <div class="checkbox" id="userName">
+          </div>
+          <button class="btn btn-warning btn-sm" id="btnUsers">获取</button>
+        </div>
+        <div class="ss">
+          <h5>就诊时间</h5>
+          <div class="form-inline " id="dateTime">
+            <div class="form-group">
+              <label>优选日期</label>
+              <input type="date" class="form-control" id="planA" />
+            </div>
+            <div class="form-group">
+              <label for="password">备选日期</label>
+              <input type="date" class="form-control" id="planB" />
+            </div>
+          </div>
+        </div>
+        <div class="ss">
+          <h5>按级别选择大夫</h5>
+          <div class="checkbox" id="docType">
+            <label class="checkbox-inline">
+              <input type="checkbox" value="主任"> 主任
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="专家"> 专家
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="正教授"> 正教授
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="副教授"> 副教授
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" value="普通"> 普通
+            </label>
+          </div>
+        </div>
+        <div class="ss">
+          <h5>按名字选择医生</h5>
+          <div class="checkbox" id="docName">
+          </div>
+          <button class="btn btn-warning btn-sm" id="btnDoctors">获取</button>
+        </div>
+      </div>
     </div>
-    <footer>
-        源码地址：https://github.com/ksky521/register
-    </footer>
-    <script type="text/javascript" src="src/js/main.js"></script>
+    <div class="col-md-5">
+      <div class="nav" id="navTools">
+        <a class="btn btn-default" href="javascript:void(0);" data-id="home"><span class="glyphicon glyphicon-home"></span></a>
+        <a class="btn btn-default" href="javascript:void(0);" data-id="back"><span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a class="btn btn-default" href="javascript:void(0);" data-id="reload"><span class="glyphicon glyphicon-repeat"></span></a>
+      </div>
+      <webview id="register" autosize="on" minwidth="380" minheight="600" maxheight="610" src="http://yyghwx.bjguahao.gov.cn/" partition="persist:webview" nodeintegration preload="src/js/preload.js" useragent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13F69 MicroMessenger/6.3.16 NetType/WIFI Language/zh_CN"></webview>
+    </div>
+  </div>
+  <footer>
+    支持本软件：
+    <a href="javascript:void(0);" data-toggle="modal" data-target="#qrcodeWechat">
+      <kbd>微信</kbd>
+    </a>
+    <a href="javascript:void(0);" data-toggle="modal" data-target="#qrcodeWechat">
+      <kbd>支付宝</kbd>
+    </a>
+  </footer>
+  <div class="modal fade" id="qrcodeWechat" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title">扫码转账支持本软件</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6"><img src="./src/img/wechat.png" class="img-responsive" /></div>
+            <div class="col-md-6"><img src="./src/img/alipay.png" class="img-responsive" /></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">这次没钱, 下次支持</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="src/js/main.js"></script>
 </body>
 
 </html>

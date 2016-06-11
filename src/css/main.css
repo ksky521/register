@@ -5838,14 +5838,14 @@ button.close {
     height: 600px; }
 
 #register {
-  width: 380px;
+  width: 400px;
   height: 600px; }
 
 footer {
   position: fixed;
   left: 20px;
   bottom: 10px;
-  color: #aaa; }
+  color: #000; }
 
 .ss {
   margin: 0;
