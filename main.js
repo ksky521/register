@@ -6,7 +6,24 @@ const renderer = electron.ipcMain;
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
 var onceWindow = null;
+
 var menuTpl = [{
+  label: 'Window',
+  role: 'window',
+  submenu: [{
+    label: '最小化',
+    accelerator: 'CmdOrCtrl+M',
+    role: 'minimize'
+  }, {
+    label: '关闭',
+    accelerator: 'CmdOrCtrl+W',
+    role: 'close'
+  }, {
+    label: '退出',
+    accelerator: 'Command+Q',
+    click: function() { app.quit(); }
+  }]
+}, {
   label: '帮助',
   role: 'help',
   submenu: [{
