@@ -96,13 +96,13 @@ $('#power').click(function() {
 });
 //点击获取医生列表
 $('#btnDoctors').click(function() {
-  $register.loadURL(URL_REG);
   var cb = function() {
     var code = getCode(exec_getDoctors);
     $register.executeJavaScript(code);
     $register.removeEventListener('did-finish-load', cb);
   }
   $register.addEventListener('did-finish-load', cb);
+  $register.loadURL(URL_REG);
 
 });
 //自动登录
@@ -112,7 +112,6 @@ $('#autoLogin').click(function() {
   });
 
   if (CONFIG.account && CONFIG.password) {
-    $register.loadURL(URL_LOGIN);
 
     var cb = function() {
       var code = getCode(exec_login, CONFIG);
@@ -121,6 +120,7 @@ $('#autoLogin').click(function() {
 
     }
     $register.addEventListener('did-finish-load', cb);
+    $register.loadURL(URL_LOGIN);
 
   } else {
     alert('账号或密码为空');
@@ -129,13 +129,13 @@ $('#autoLogin').click(function() {
 
 //获取就诊人信息
 $('#btnUsers').click(function() {
-  $register.loadURL(URL_USERS);
   var cb = function() {
     var code = getCode(exec_getUsers);
     $register.executeJavaScript(code);
     $register.removeEventListener('did-finish-load', cb);
   }
   $register.addEventListener('did-finish-load', cb);
+  $register.loadURL(URL_USERS);
 });
 
 var timer;
@@ -146,6 +146,9 @@ $('#btnStart').click(function() {
   url = url({
     random: Date.now()
   });
+
+  $register.addEventListener('did-finish-load', checkIt);
+
   $register.loadURL(url);
   timer && clearInterval(timer);
   timer = setInterval(function() {
@@ -153,7 +156,6 @@ $('#btnStart').click(function() {
     $register.reloadIgnoringCache();
   }, 3e3);
 
-  $register.addEventListener('did-finish-load', checkIt);
 
 });
 
@@ -164,7 +166,8 @@ $('#btnStop').click(function() {
 
 
 function checkIt() {
-  console.log(CONFIG);
+  // console.log(CONFIG);
+  delete CONFIG.src;
   var code = getCode(exec_checkCanRegisterDom, { config: JSON.stringify(CONFIG) });
   $register.executeJavaScript(code);
 }
@@ -201,8 +204,6 @@ ipcRenderer.on('hostChannel', function(event, msg) {
 });
 
 
-
-
 //检验
 function exec_checkCanRegisterDom() {
   var element = null,
@@ -210,7 +211,7 @@ function exec_checkCanRegisterDom() {
   var url = location.href.split('#')[0];
   var config = '{{!config}}';
   config = JSON.parse(config);
-
+  // console.log(url);
   if ($('#mobileQuickLogin').length && $('#pwQuickLogin').length) {
     __nightmare.send('login');
     return;
@@ -222,12 +223,12 @@ function exec_checkCanRegisterDom() {
         $('select[name=hzr]').val($opts.eq(i).val());
       }
     }
-
     element = document.getElementById('btnSendCodeOrder');
     event = document.createEvent('MouseEvent');
     event.initEvent('click', true, true);
     element.dispatchEvent(event);
     return;
+
   }
 
   var $list = $('.wp .signal_source_l a');
@@ -249,6 +250,8 @@ function exec_checkCanRegisterDom() {
       }
       if (config.planB || config.planA) {
         step++;
+        console.log(config.planA, config.planB);
+
         ['planA', 'planB'].forEach(function(v) {
           if (config[v] && date.indexOf(config[v]) !== -1) {
             step--;
@@ -257,7 +260,7 @@ function exec_checkCanRegisterDom() {
       }
       if (config.docType && config.docType.length) {
         step++;
-
+        console.log(config.docType);
         config.docType.forEach(function(v) {
           if (name.indexOf(v) !== -1) {
             step--;
@@ -278,6 +281,7 @@ function exec_checkCanRegisterDom() {
     }
 
   }
+
 }
 
 //自动登录
